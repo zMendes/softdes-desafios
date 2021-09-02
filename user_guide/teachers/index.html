@@ -350,13 +350,15 @@
                 
                 <h2 id="adding-students">Adding students</h2>
 <p>To add students, first you need to create a CSV file named "users.csv" with their names and roles:</p>
-<p><img alt="add_user" src="../../adding_users.png" /></p>
+<p><code>caio,student</code></p>
+<p>Then, you will need to create the database:</p>
+<p><code>$ sqlite3 quiz.db &lt; quiz.sql</code></p>
 <p>Adding users to the database:</p>
 <p><code>$ python3 adduser.py</code></p>
 <h2 id="adding-new-quizzes">Adding new quizzes</h2>
 <p>To add quizzes, you will have to manually insert the quiz in the database with a SQL script.</p>
-<p>Example of a SQL query adding a quiz:
-<img alt="insert_quiz" src="../../insert_quiz.png" /></p>
+<p>Example of a SQL query adding a quiz:<br />
+<code>Insert into QUIZ(numb, release, expire, problem, tests, results, diagnosis) values (1, '2018-08-01','2022-12-31 23:59:59','Exemplo de problema','[[1],[2],[3]]','[0, 0, 0]','["a","b","c"]');</code></p>
                 
               
               

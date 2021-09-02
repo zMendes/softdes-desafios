@@ -1,0 +1,7 @@
+Flask==1.1.2
+Flask-HTTPAuth==3.2.4
+mkdocs==1.2.2
+sqlite3
+hashlib
+numbers
+datetime

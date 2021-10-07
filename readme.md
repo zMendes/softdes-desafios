@@ -7,10 +7,10 @@ Servidor que hospeda os desafios para os alunos da matéria de engenharia de Des
 
 #### Unitários
 Para rodar,  execute:
-`cd src && pytest softdes_test.py  `
+`cd src && pytest softdes_test.py`
 
-#### Integração
+#### Interface
 Instale o driver do chrome de acordo com a versão do seu navegador: https://chromedriver.chromium.org/downloads  
 
 Extraia o arquivo e coloque na pasta src. Em seguida, para rodar os testes execute:
-`cd src && python3 integration_test.py`
+`cd src && python3 interface_test.py`

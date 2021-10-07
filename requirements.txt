@@ -5,4 +5,3 @@ sqlite3
 hashlib
 numbers
 datetime
-selenium

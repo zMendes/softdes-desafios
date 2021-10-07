@@ -34,12 +34,10 @@ def lambda_handler(event):
         ndes = int(event["ndes"])
         code = event["code"]
         args = event["args"]
-        resp = event["resp"]
-        diag = event["diag"]
         exec(code, locals())
 
         test = []
-        for index, arg in enumerate(args):
+        for index in enumerate(args):
             if not "desafio{0}".format(ndes) in locals():
                 return "Nome da função inválido. Usar 'def desafio{0}(...)'".format(
                     ndes
@@ -89,8 +87,8 @@ def get_user_quiz(userid, quizid):
     """Retrieve quizes from user"""
     conn = sqlite3.connect(DBNAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT sent,answer,result from USERQUIZ where userid = '{0}' and quizid = {1} order by sent desc".format(userid, quizid))
-    info = [reg for reg in cursor.fetchall()]
+    cursor.execute("SELECT id, numb from QUIZ where release < '{0}'".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    info = cursor.fetchall()
     conn.close()
     return info
 
@@ -103,17 +101,13 @@ def set_user_quiz(userid, quizid, sent, answer, result):
     # values ('{0}',{1},'{2}','{3}','{4}');".format(userid, quizid, sent, answer, result))
     # cursor.execute("insert into USERQUIZ(userid,quizid,sent,answer,result)
     # values ('{0}',{1},'{2}','{3}','{4}');".format(userid, quizid, sent, answer, result))
-    try:
-        cursor.execute(
+    cursor.execute(
         "insert into USERQUIZ(userid,quizid,sent,answer,result) values (?,?,?,?,?);",
         (userid, quizid, sent, answer, result),
     )
     #
-
-        conn.commit()
-    except:
-        print("Deu erro")
-    
+    conn.commit()
+    conn.close()
 
 
 def get_quiz(user_id, user):
@@ -221,7 +215,6 @@ def main():
             feedback = "Sem erros."
             result = "OK!"
 
-
         set_user_quiz(auth.username(), user_id, sent, feedback, result)
 
     if request.method == "GET":
@@ -253,7 +246,7 @@ def main():
             msg=msg,
         )
 
-    answers = get_user_quiz(auth.username(), user_id)
+    answers = get_user_quiz(auth.username(), id)
 
     return render_template(
         "index.html",
